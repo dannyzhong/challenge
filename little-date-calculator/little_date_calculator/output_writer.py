@@ -1,16 +1,20 @@
-from little_date_calculator.error import CSVFileOutputError
+"""
+result ouput to file module
+"""
 import csv
+from little_date_calculator.error import CSVFileOutputError
 
 
 class CSVWriter:
-    def __init__(self):
-        None
 
     @classmethod
     def output(cls, output_file, result: list):
         try:
-            with open(output_file, 'w') as f:
-                writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            with open(output_file, 'w') as write_file:
+                writer = csv.writer(write_file,
+                                    delimiter=',',
+                                    quotechar='"',
+                                    quoting=csv.QUOTE_MINIMAL)
                 writer.writerow(["count"])
                 for item in result:
                     writer.writerow([item])

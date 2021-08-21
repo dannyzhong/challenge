@@ -1,3 +1,6 @@
+"""
+exception class
+"""
 class ValidationError(Exception):
     """ An input parameter is invalid. """
 

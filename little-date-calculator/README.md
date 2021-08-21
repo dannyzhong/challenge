@@ -2,6 +2,7 @@ My Little date Calculator
 ---
 
 # To install the tool from source
+
 - Create virtual environment and activate it
   ```bash
   virtualenv -p python3 env

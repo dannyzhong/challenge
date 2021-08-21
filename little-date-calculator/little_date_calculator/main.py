@@ -1,3 +1,6 @@
+"""
+the main entry point for the little date calculator
+"""
 import argparse
 import sys
 from argparse import RawTextHelpFormatter
@@ -10,19 +13,36 @@ OUTPUT_TEMPLATE = "The days between %s and %s is %s days"
 
 
 def arguments_parser():
+    """parse the input arguments
+
+    :return:
+    """
     parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter,
                                      description="My little date calculator")
-    parser.add_argument("--date-format", help="the input date format", default="dd/mm/yyyy")
-    parser.add_argument("-s", "--start-date", help="start date for the date calculation", type=str, required='--input-file' not in sys.argv)
-    parser.add_argument("-e", "--end-date", help="end date for the date calculation", type=str, required='--input-file' not in sys.argv)
+    parser.add_argument("--date-format",
+                        help="the input date format",
+                        default="dd/mm/yyyy")
+    parser.add_argument("-s", "--start-date",
+                        help="start date for the date calculation",
+                        type=str, required='--input-file' not in sys.argv)
+    parser.add_argument("-e", "--end-date",
+                        help="end date for the date calculation",
+                        type=str, required='--input-file' not in sys.argv)
     parser.add_argument("--input-file", help="input source file")
-    parser.add_argument("--input-file-format", choices=["csv"] ,help="input file format", default="csv")
-    parser.add_argument("--output-file", help="output file", required='--input-file' in sys.argv )
-    parser.add_argument("--output-file-format", choices=["csv"], help="output file format", default="csv")
+    parser.add_argument("--input-file-format", choices=["csv"],
+                        help="input file format", default="csv")
+    parser.add_argument("--output-file", help="output file",
+                        required='--input-file' in sys.argv )
+    parser.add_argument("--output-file-format", choices=["csv"],
+                        help="output file format", default="csv")
     return parser
 
 
 def main():
+    """ main entry point
+
+    :return:
+    """
     args = arguments_parser().parse_args()
     parser = DateInputParser(date_format=args.date_format)
     calculator = DateCalculator()
@@ -32,7 +52,8 @@ def main():
         for date_range in loader.load(args.input_file):
             start_date_parsed = parser.parse(date_range[0].strip())
             end_date_parsed = parser.parse(date_range[1].strip())
-            result.append(str(calculator.diff(start_date=start_date_parsed, end_date=end_date_parsed)))
+            result.append(str(calculator.diff(start_date=start_date_parsed,
+                                              end_date=end_date_parsed)))
         writer = OutputWriter(args.input_file_format)
         writer.write(args.output_file, result)
     else:
@@ -40,7 +61,8 @@ def main():
         end_date_parsed = parser.parse(args.end_date)
         print(OUTPUT_TEMPLATE%(args.start_date,
                                args.end_date,
-                               str(calculator.diff(start_date=start_date_parsed, end_date=end_date_parsed))))
+                               str(calculator.diff(start_date=start_date_parsed,
+                                                   end_date=end_date_parsed))))
 
 
 if __name__ == '__main__':

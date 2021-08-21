@@ -1,5 +1,8 @@
-from little_date_calculator.error import CSVFileLoadError
+"""
+load input source file module
+"""
 import csv
+from little_date_calculator.error import CSVFileLoadError
 
 
 class CSVLoader:
@@ -9,8 +12,8 @@ class CSVLoader:
     @classmethod
     def load(cls, input_file):
         try:
-            with open(input_file, 'r') as f:
-                reader = csv.reader(f)
+            with open(input_file, 'r') as csv_file:
+                reader = csv.reader(csv_file)
                 next(reader)
                 return [row for row in reader]
         except:
